@@ -1,0 +1,49 @@
+{
+  "name": "diplom",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "decamelize": "^1.2.0",
+    "decode-uri-component": "^0.2.0",
+    "detect-file": "^1.0.0",
+    "domain-browser": "^1.2.0",
+    "emojis-list": "^2.1.0",
+    "escape-string-regexp": "^1.0.5",
+    "esrecurse": "^4.2.1",
+    "events": "^3.0.0",
+    "estraverse": "^4.2.0",
+    "fast-deep-equal": "^2.0.1",
+    "fast-json-stable-stringify": "^2.0.0",
+    "figgy-pudding": "^3.5.1",
+    "for-in": "^1.0.2",
+    "fs.realpath": "^1.0.0",
+    "get-caller-file": "^1.0.3",
+    "get-value": "^2.0.6",
+    "graceful-fs": "^4.1.15",
+    "has-flag": "^3.0.0",
+    "https-browserify": "^1.0.0",
+    "ieee754": "^1.1.13",
+    "iferr": "^0.1.5",
+    "imurmurhash": "^0.1.4",
+    "indexof": "^0.0.1",
+    "inherits": "^2.0.3",
+    "ini": "^1.3.5",
+    "interpret": "^1.2.0",
+    "invert-kv": "^2.0.0",
+    "is-accessor-descriptor": "^0.1.6",
+    "is-binary-path": "^1.0.1",
+    "is-buffer": "^1.1.6",
+    "is-data-descriptor": "^0.1.4",
+    "is-descriptor": "^0.1.6"
+  },
+  "description": ""
+}
