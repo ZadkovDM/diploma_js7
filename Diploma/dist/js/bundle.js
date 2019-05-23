@@ -94,7 +94,7 @@
 /***/ (function(module, exports) {
 
 function timer() {
-	let deadline = '2019-05-18';
+	let deadline = '2019-12-18';
 
 	let getTimeRemaining = (endtime) => {
 		let t = Date.parse(endtime) - Date.parse(new Date()),
