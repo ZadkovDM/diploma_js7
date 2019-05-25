@@ -86,6 +86,37 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/parts/glazingTabs.js":
+/*!*************************************!*\
+  !*** ./src/js/parts/glazingTabs.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function glazingTabs() {
+
+	let glazingInfo = document.querySelector('.glazing_slider'),
+		glazingTab = glazingInfo.querySelectorAll('.glazing_block'),
+		glazingTabContent = document.querySelectorAll('.glazing-tabcontent');
+
+	for (let i = 0; i < glazingTab.length; i++) {
+		glazingTab[i].addEventListener('click', function () {
+			for (let u = 0; u < glazingTab.length; u++) {
+				glazingTab[u].classList.remove('active');
+				glazingTabContent[u].style.display = 'none';
+			}
+
+			this.classList.add('active');
+			glazingTabContent[i].style.display = 'flex';
+		});
+	}
+
+}
+
+module.exports = glazingTabs;
+
+/***/ }),
+
 /***/ "./src/js/parts/timer.js":
 /*!*******************************!*\
   !*** ./src/js/parts/timer.js ***!
@@ -162,9 +193,11 @@ module.exports = timer;
 window.addEventListener('DOMContentLoaded', function() {
 
 	"use strict";
-	let timer = __webpack_require__(/*! ./parts/timer.js */ "./src/js/parts/timer.js");
+	let timer = __webpack_require__(/*! ./parts/timer.js */ "./src/js/parts/timer.js"),
+		glazingTabs = __webpack_require__(/*! ./parts/glazingTabs.js */ "./src/js/parts/glazingTabs.js");
 
 	timer();
+	glazingTabs();
 
 });
 
