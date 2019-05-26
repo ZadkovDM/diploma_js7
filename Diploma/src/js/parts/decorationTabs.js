@@ -6,7 +6,7 @@ function decorationTabs() {
 		decorationTabContent = document.querySelectorAll('.decoration-tabcontent');
 
 	for (let i = 0; i < decorationTab.length; i++) {
-		decorationTab[i].addEventListener('click', function () {
+		decorationTab[i].addEventListener('click', () => {
 			for (let u = 0; u < decorationTab.length; u++) {
 				decorationActive[u].classList.remove('after_click');
 				decorationTabContent[u].style.display = 'none';

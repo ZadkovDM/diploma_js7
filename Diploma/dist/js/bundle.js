@@ -101,7 +101,7 @@ function decorationTabs() {
 		decorationTabContent = document.querySelectorAll('.decoration-tabcontent');
 
 	for (let i = 0; i < decorationTab.length; i++) {
-		decorationTab[i].addEventListener('click', function () {
+		decorationTab[i].addEventListener('click', () => {
 			for (let u = 0; u < decorationTab.length; u++) {
 				decorationActive[u].classList.remove('after_click');
 				decorationTabContent[u].style.display = 'none';
@@ -115,6 +115,37 @@ function decorationTabs() {
 }
 
 module.exports = decorationTabs;
+
+/***/ }),
+
+/***/ "./src/js/parts/engineerModal.js":
+/*!***************************************!*\
+  !*** ./src/js/parts/engineerModal.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function engineerModal() {
+	let callEngineer = document.querySelector('.header_btn_wrap_block'),
+		popupEngineer = document.querySelector('.popup_engineer'),
+		popupClose = document.querySelectorAll('.popup_close')[1];
+
+	callEngineer.addEventListener('click', () => {
+		popupEngineer.style.display = 'block';
+	});
+
+	popupClose.addEventListener('click', () => {
+		popupEngineer.style.display = 'none';
+	});
+
+	window.addEventListener('click', (e) => {
+		if (e.target == popupEngineer) {
+			popupEngineer.style.display = 'none';
+		}
+	});
+
+}
+module.exports = engineerModal;
 
 /***/ }),
 
@@ -133,7 +164,7 @@ function glazingTabs() {
 		glazingTabContent = document.querySelectorAll('.glazing-tabcontent');
 
 	for (let i = 0; i < glazingTab.length; i++) {
-		glazingTab[i].addEventListener('click', function () {
+		glazingTab[i].addEventListener('click', () => {
 			for (let u = 0; u < glazingTab.length; u++) {
 				glazingLink[u].classList.remove('active');
 				glazingTabContent[u].style.display = 'none';
@@ -216,6 +247,20 @@ module.exports = timer;
 
 /***/ }),
 
+/***/ "./src/js/parts/viewPhoto.js":
+/*!***********************************!*\
+  !*** ./src/js/parts/viewPhoto.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function viewPhoto() {
+	
+}
+module.exports = viewPhoto;
+
+/***/ }),
+
 /***/ "./src/js/script.js":
 /*!**************************!*\
   !*** ./src/js/script.js ***!
@@ -228,11 +273,15 @@ window.addEventListener('DOMContentLoaded', function() {
 	"use strict";
 	let timer = __webpack_require__(/*! ./parts/timer.js */ "./src/js/parts/timer.js"),
 		glazingTabs = __webpack_require__(/*! ./parts/glazingTabs.js */ "./src/js/parts/glazingTabs.js"),
-		decorationTabs = __webpack_require__(/*! ./parts/decorationTabs.js */ "./src/js/parts/decorationTabs.js");
+		decorationTabs = __webpack_require__(/*! ./parts/decorationTabs.js */ "./src/js/parts/decorationTabs.js"),
+		engineerModal = __webpack_require__(/*! ./parts/engineerModal.js */ "./src/js/parts/engineerModal.js"),
+		viewPhoto = __webpack_require__(/*! ./parts/viewPhoto.js */ "./src/js/parts/viewPhoto.js");
 
 	timer();
 	glazingTabs();
 	decorationTabs();
+	engineerModal();
+	viewPhoto();
 
 });
 
