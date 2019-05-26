@@ -128,15 +128,17 @@ module.exports = decorationTabs;
 function engineerModal() {
 	let callEngineer = document.querySelector('.header_btn_wrap_block'),
 		popupEngineer = document.querySelector('.popup_engineer'),
-		popupClose = document.querySelectorAll('.popup_close')[1];
+		popupClose = document.querySelectorAll('.popup_close');
 
 	callEngineer.addEventListener('click', () => {
 		popupEngineer.style.display = 'block';
 	});
 
-	popupClose.addEventListener('click', () => {
-		popupEngineer.style.display = 'none';
-	});
+	for (let i = 0; i < popupClose.length; i++) {
+		popupClose[i].addEventListener('click', () => {
+			popupEngineer.style.display = 'none';
+		});
+	}
 
 	window.addEventListener('click', (e) => {
 		if (e.target == popupEngineer) {
@@ -178,6 +180,41 @@ function glazingTabs() {
 }
 
 module.exports = glazingTabs;
+
+/***/ }),
+
+/***/ "./src/js/parts/popupModal.js":
+/*!************************************!*\
+  !*** ./src/js/parts/popupModal.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function popupModal() {
+	let callBack = document.querySelectorAll('.phone_link'),
+		popupModal = document.querySelector('.popup'),
+		popupClose = document.querySelectorAll('.popup_close');
+
+	for (let i = 0; i < callBack.length; i++) {
+		callBack[i].addEventListener('click', () => {
+			popupModal.style.display = 'block';
+		});
+	}
+
+	for (let i = 0; i < popupClose.length; i++) {
+		popupClose[i].addEventListener('click', () => {
+			popupModal.style.display = 'none';
+		});
+	}
+
+	window.addEventListener('click', (e) => {
+		if (e.target == popupModal) {
+			popupModal.style.display = 'none';
+		}
+	});
+
+}
+module.exports = popupModal;
 
 /***/ }),
 
@@ -275,12 +312,14 @@ window.addEventListener('DOMContentLoaded', function() {
 		glazingTabs = __webpack_require__(/*! ./parts/glazingTabs.js */ "./src/js/parts/glazingTabs.js"),
 		decorationTabs = __webpack_require__(/*! ./parts/decorationTabs.js */ "./src/js/parts/decorationTabs.js"),
 		engineerModal = __webpack_require__(/*! ./parts/engineerModal.js */ "./src/js/parts/engineerModal.js"),
+		popupModal = __webpack_require__(/*! ./parts/popupModal.js */ "./src/js/parts/popupModal.js"),
 		viewPhoto = __webpack_require__(/*! ./parts/viewPhoto.js */ "./src/js/parts/viewPhoto.js");
 
 	timer();
 	glazingTabs();
 	decorationTabs();
 	engineerModal();
+	popupModal();
 	viewPhoto();
 
 });

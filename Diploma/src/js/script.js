@@ -5,12 +5,14 @@ window.addEventListener('DOMContentLoaded', function() {
 		glazingTabs = require('./parts/glazingTabs.js'),
 		decorationTabs = require('./parts/decorationTabs.js'),
 		engineerModal = require('./parts/engineerModal.js'),
+		popupModal = require('./parts/popupModal.js'),
 		viewPhoto = require('./parts/viewPhoto.js');
 
 	timer();
 	glazingTabs();
 	decorationTabs();
 	engineerModal();
+	popupModal();
 	viewPhoto();
 
 });
