@@ -86,6 +86,37 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/parts/decorationTabs.js":
+/*!****************************************!*\
+  !*** ./src/js/parts/decorationTabs.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function decorationTabs() {
+
+	let decorationInfo = document.querySelector('.decoration_slider'),
+		decorationTab = decorationInfo.querySelectorAll('.decoration_item'),
+		decorationTabContent = document.querySelectorAll('.decoration-tabcontent');
+
+	for (let i = 0; i < decorationTab.length; i++) {
+		decorationTab[i].addEventListener('click', function () {
+			for (let u = 0; u < decorationTab.length; u++) {
+				decorationTab[u].classList.remove('after_click');
+				decorationTabContent[u].style.display = 'none';
+			}
+
+			this.classList.add('after_click');
+			decorationTabContent[i].style.display = 'flex';
+		});
+	}
+
+}
+
+module.exports = decorationTabs;
+
+/***/ }),
+
 /***/ "./src/js/parts/glazingTabs.js":
 /*!*************************************!*\
   !*** ./src/js/parts/glazingTabs.js ***!
@@ -97,16 +128,17 @@ function glazingTabs() {
 
 	let glazingInfo = document.querySelector('.glazing_slider'),
 		glazingTab = glazingInfo.querySelectorAll('.glazing_block'),
+		glazingLink = glazingInfo.getElementsByTagName('a'),
 		glazingTabContent = document.querySelectorAll('.glazing-tabcontent');
 
 	for (let i = 0; i < glazingTab.length; i++) {
 		glazingTab[i].addEventListener('click', function () {
 			for (let u = 0; u < glazingTab.length; u++) {
-				glazingTab[u].classList.remove('active');
+				glazingLink[u].classList.remove('active');
 				glazingTabContent[u].style.display = 'none';
 			}
 
-			this.classList.add('active');
+			glazingLink[i].classList.add('active');
 			glazingTabContent[i].style.display = 'flex';
 		});
 	}
@@ -194,10 +226,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	"use strict";
 	let timer = __webpack_require__(/*! ./parts/timer.js */ "./src/js/parts/timer.js"),
-		glazingTabs = __webpack_require__(/*! ./parts/glazingTabs.js */ "./src/js/parts/glazingTabs.js");
+		glazingTabs = __webpack_require__(/*! ./parts/glazingTabs.js */ "./src/js/parts/glazingTabs.js"),
+		decorationTabs = __webpack_require__(/*! ./parts/decorationTabs.js */ "./src/js/parts/decorationTabs.js");
 
 	timer();
 	glazingTabs();
+	decorationTabs();
 
 });
 

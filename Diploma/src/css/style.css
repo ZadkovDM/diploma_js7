@@ -592,13 +592,13 @@ textarea:focus {
   display: none;
 }
 
-.hide {
+/* .hide {
   display: none;
 } 
 
 .show {
   display: flex;
-}
+} */
 
 /*Our works*/
 .works {
