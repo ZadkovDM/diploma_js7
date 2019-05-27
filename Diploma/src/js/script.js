@@ -6,6 +6,8 @@ window.addEventListener('DOMContentLoaded', function() {
 		decorationTabs = require('./parts/decorationTabs.js'),
 		engineerModal = require('./parts/engineerModal.js'),
 		popupModal = require('./parts/popupModal.js'),
+		formModal = require('./parts/formModal.js'),
+		intervalModal = require('./parts/intervalModal.js'),
 		viewPhoto = require('./parts/viewPhoto.js');
 
 	timer();
@@ -13,6 +15,8 @@ window.addEventListener('DOMContentLoaded', function() {
 	decorationTabs();
 	engineerModal();
 	popupModal();
+	formModal();
+	intervalModal();
 	viewPhoto();
 
 });

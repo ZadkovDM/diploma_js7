@@ -1,8 +1,7 @@
 function decorationTabs() {
 
-	let decorationInfo = document.querySelector('.decoration_slider'),
-		decorationTab = decorationInfo.querySelectorAll('.decoration_item'),
-		decorationActive = decorationInfo.querySelectorAll('.decoration_active'),
+	let decorationTab = document.querySelectorAll('.decoration_item'),
+		decorationActive = document.querySelectorAll('.decoration_item > div'),
 		decorationTabContent = document.querySelectorAll('.decoration-tabcontent');
 
 	for (let i = 0; i < decorationTab.length; i++) {

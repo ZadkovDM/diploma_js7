@@ -95,9 +95,8 @@
 
 function decorationTabs() {
 
-	let decorationInfo = document.querySelector('.decoration_slider'),
-		decorationTab = decorationInfo.querySelectorAll('.decoration_item'),
-		decorationActive = decorationInfo.querySelectorAll('.decoration_active'),
+	let decorationTab = document.querySelectorAll('.decoration_item'),
+		decorationActive = document.querySelectorAll('.decoration_item > div'),
 		decorationTabContent = document.querySelectorAll('.decoration-tabcontent');
 
 	for (let i = 0; i < decorationTab.length; i++) {
@@ -151,6 +150,99 @@ module.exports = engineerModal;
 
 /***/ }),
 
+/***/ "./src/js/parts/formModal.js":
+/*!***********************************!*\
+  !*** ./src/js/parts/formModal.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function formModal() {
+	
+	let validTel = document.querySelectorAll('input[name="user_phone"]');
+
+	validTel.forEach(function (item) {
+		item.oninput = function () {
+			item.value = item.value.replace(/[^\d]/g, '');
+		}
+	});
+
+	let message = {
+		loading: 'Идет отправка',
+		success: 'Отправлено',
+		failure: 'Ошибка'
+	};
+
+	let form = document.querySelector('.main_form'),
+		input = form.getElementsByTagName('input'),
+		contactForm = document.querySelector('.form'),
+		contactInput = contactForm.getElementsByTagName('input'),
+		statusMessage = document.createElement('div');
+
+	statusMessage.classList.add('status');
+
+	// Модальное окно
+
+	let sendForm = (form, input) => {
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			form.appendChild(statusMessage);
+			let formData = new FormData(form);
+
+			let postData = (data) => {
+
+				return new Promise(function (resolve, reject) {
+					let request = new XMLHttpRequest();
+
+					request.open('POST', 'server.php');
+
+					request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+					let obj = {};
+					formData.forEach((value, key) => {
+						obj[key] = value;
+					});
+
+					let data = JSON.stringify(obj);
+
+					request.onreadystatechange = function () {
+						if (request.readyState < 4) {
+							resolve()
+						} else if (request.readyState === 4 && request.status == 200) {
+							resolve()
+						} else {
+							reject()
+						}
+					}
+
+					request.send(data);
+				})
+
+			} // Конец postData
+
+			let clearInput = () => {
+				for (let i = 0; i < input.length; i++) {
+					input[i].value = '';
+				}
+			}
+
+			postData(formData)
+				.then(() => statusMessage.innerHTML = message.loading)
+				.then(() => {
+					statusMessage.innerHTML = message.success;
+				})
+				.catch(() => statusMessage.innerHTML = message.failure)
+				.then(clearInput)
+		});
+	}
+
+	sendForm(form, input);
+	sendForm(contactForm, contactInput);
+}
+module.exports = formModal;
+
+/***/ }),
+
 /***/ "./src/js/parts/glazingTabs.js":
 /*!*************************************!*\
   !*** ./src/js/parts/glazingTabs.js ***!
@@ -180,6 +272,29 @@ function glazingTabs() {
 }
 
 module.exports = glazingTabs;
+
+/***/ }),
+
+/***/ "./src/js/parts/intervalModal.js":
+/*!***************************************!*\
+  !*** ./src/js/parts/intervalModal.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function intervalModal() {
+
+	let show = document.querySelector('.popup');
+
+	function showModal() {
+
+		show.style.display = 'flex';
+
+	}
+	setTimeout(showModal, 60000);
+
+}
+module.exports = intervalModal;
 
 /***/ }),
 
@@ -313,6 +428,8 @@ window.addEventListener('DOMContentLoaded', function() {
 		decorationTabs = __webpack_require__(/*! ./parts/decorationTabs.js */ "./src/js/parts/decorationTabs.js"),
 		engineerModal = __webpack_require__(/*! ./parts/engineerModal.js */ "./src/js/parts/engineerModal.js"),
 		popupModal = __webpack_require__(/*! ./parts/popupModal.js */ "./src/js/parts/popupModal.js"),
+		formModal = __webpack_require__(/*! ./parts/formModal.js */ "./src/js/parts/formModal.js"),
+		intervalModal = __webpack_require__(/*! ./parts/intervalModal.js */ "./src/js/parts/intervalModal.js"),
 		viewPhoto = __webpack_require__(/*! ./parts/viewPhoto.js */ "./src/js/parts/viewPhoto.js");
 
 	timer();
@@ -320,6 +437,8 @@ window.addEventListener('DOMContentLoaded', function() {
 	decorationTabs();
 	engineerModal();
 	popupModal();
+	formModal();
+	intervalModal();
 	viewPhoto();
 
 });
