@@ -96,36 +96,83 @@
 function calcModal() {
 
 	let calcBtn = document.querySelectorAll('.popup_calc_btn'),
-		calcClose = document.querySelectorAll('.popup_calc_close'),
-		calcBtnNext = document.querySelector('.popup_calc_button'),
+		calcClose = document.querySelectorAll('.calc_close'),
+		calcBtnOne = document.querySelector('.popup_calc_button'),
 		popup = document.querySelector('.popup_calc'),
-		popupProfile = document.querySelector('.popup_calc_profile');
+		popupProfile = document.querySelector('.popup_calc_profile'),
+		calcBtnTwo = document.querySelector('.popup_calc_profile_button'),
+		popupEnd = document.querySelector('.popup_calc_end'),
+		// Табы на первом модальном окне
+		info = document.querySelector('.balcon_icons'), //Родитель для табов
+		tabs = info.querySelectorAll('img'), //Табы
+		content = document.querySelectorAll('.big_img > img'); //Контент табов
+
+	for (let i = 0; i < tabs.length; i++) {
+		tabs[i].addEventListener('click', () => {
+			for (let u = 0; u < tabs.length; u++) {
+				event.preventDefault();
+				content[u].style.display = 'none';
+				tabs[u].classList.remove('do_image_more');
+			}
+
+			content[i].style.display = 'flex';
+			tabs[i].classList.add('do_image_more');
+		});
+	}
+
 
 	// Первое модальное окно
-
 	for (let i = 0; i < calcBtn.length; i++) {
 		calcBtn[i].addEventListener('click', () => {
 			popup.style.display = 'block';
+			document.body.style.overflow = 'hidden';
 		});
 	}
 
+	// Закрытие всех модальных окон по клику на крестик
 	for (let i = 0; i < calcClose.length; i++) {
 		calcClose[i].addEventListener('click', () => {
 			popup.style.display = 'none';
+			popupProfile.style.display = 'none';
+			popupEnd.style.display = 'none';
+			document.body.style.overflow = '';
 		});
 	}
 
+	// Закрытие модального окна по клику на подложку
 	window.addEventListener('click', (e) => {
 		if (e.target == popup) {
 			popup.style.display = 'none';
+			document.body.style.overflow = '';
 		}
 	});
 
 	// Второе модальное окно
 
-	calcBtnNext.addEventListener('click', () => {
+	calcBtnOne.addEventListener('click', () => {
 		popup.style.display = 'none';
 		popupProfile.style.display = 'block';
+	});
+
+	window.addEventListener('click', (e) => {
+		if (e.target == popupProfile) {
+			popupProfile.style.display = 'none';
+			document.body.style.overflow = '';
+		}
+	});
+
+	// Третье модальное окно
+
+	calcBtnTwo.addEventListener('click', () => {
+		popupProfile.style.display = 'none';
+		popupEnd.style.display = 'block';
+	});
+
+	window.addEventListener('click', (e) => {
+		if (e.target == popupEnd) {
+			popupEnd.style.display = 'none';
+			document.body.style.overflow = '';
+		}
 	});
 
 }
@@ -224,70 +271,71 @@ function formModal() {
 	};
 
 	let form = document.querySelector('.main_form'),
-		input = form.getElementsByTagName('input'),
-		contactForm = document.querySelector('.form'),
-		contactInput = contactForm.getElementsByTagName('input'),
+		input = document.getElementsByTagName('input'),
+		contactForm = document.querySelectorAll('.form'),
+		inputForm = document.getElementsByTagName('input'),
 		statusMessage = document.createElement('div');
 
 	statusMessage.classList.add('status');
 
 	// Модальное окно
-
 	let sendForm = (form, input) => {
-		form.addEventListener('submit', (event) => {
-			event.preventDefault();
-			form.appendChild(statusMessage);
-			let formData = new FormData(form);
+		contactForm.forEach(function (form) {
+			form.addEventListener('submit', (event) => {
+				event.preventDefault();
+				form.appendChild(statusMessage);
+				let formData = new FormData(form);
 
-			let postData = (data) => {
+				let postData = (data) => {
 
-				return new Promise(function (resolve, reject) {
-					let request = new XMLHttpRequest();
+					return new Promise(function (resolve, reject) {
+						let request = new XMLHttpRequest();
 
-					request.open('POST', 'server.php');
+						request.open('POST', 'server.php');
 
-					request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+						request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-					let obj = {};
-					formData.forEach((value, key) => {
-						obj[key] = value;
-					});
+						let obj = {};
+						formData.forEach((value, key) => {
+							obj[key] = value;
+						});
 
-					let data = JSON.stringify(obj);
+						let data = JSON.stringify(obj);
 
-					request.onreadystatechange = function () {
-						if (request.readyState < 4) {
-							resolve()
-						} else if (request.readyState === 4 && request.status == 200) {
-							resolve()
-						} else {
-							reject()
+						request.onreadystatechange = function () {
+							if (request.readyState < 4) {
+								resolve()
+							} else if (request.readyState === 4 && request.status == 200) {
+								resolve()
+							} else {
+								reject()
+							}
 						}
+
+						request.send(data);
+					})
+
+				} // Конец postData
+
+				let clearInput = () => {
+					for (let i = 0; i < input.length; i++) {
+						input[i].value = '';
 					}
-
-					request.send(data);
-				})
-
-			} // Конец postData
-
-			let clearInput = () => {
-				for (let i = 0; i < input.length; i++) {
-					input[i].value = '';
 				}
-			}
 
-			postData(formData)
-				.then(() => statusMessage.innerHTML = message.loading)
-				.then(() => {
-					statusMessage.innerHTML = message.success;
-				})
-				.catch(() => statusMessage.innerHTML = message.failure)
-				.then(clearInput)
+				postData(formData)
+					.then(() => statusMessage.innerHTML = message.loading)
+					.then(() => {
+						statusMessage.innerHTML = message.success;
+					})
+					.catch(() => statusMessage.innerHTML = message.failure)
+					.then(clearInput)
+			});
 		});
 	}
 
 	sendForm(form, input);
-	sendForm(contactForm, contactInput);
+	sendForm(contactForm, inputForm);
 }
 module.exports = formModal;
 
@@ -302,10 +350,10 @@ module.exports = formModal;
 
 function glazingTabs() {
 
-	let glazingInfo = document.querySelector('.glazing_slider'),
-		glazingTab = glazingInfo.querySelectorAll('.glazing_block'),
-		glazingLink = glazingInfo.getElementsByTagName('a'),
-		glazingTabContent = document.querySelectorAll('.glazing-tabcontent');
+	let glazingInfo = document.querySelector('.glazing_slider'), //Родитель для табов
+		glazingTab = glazingInfo.querySelectorAll('.glazing_block'), //Сами кнопки для табов
+		glazingLink = glazingInfo.getElementsByTagName('a'), //Ссылка для подключения стиля
+		glazingTabContent = document.querySelectorAll('.glazing-tabcontent'); //Контет
 
 	for (let i = 0; i < glazingTab.length; i++) {
 		glazingTab[i].addEventListener('click', () => {

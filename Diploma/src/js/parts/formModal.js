@@ -15,69 +15,70 @@ function formModal() {
 	};
 
 	let form = document.querySelector('.main_form'),
-		input = form.getElementsByTagName('input'),
-		contactForm = document.querySelector('.form'),
-		contactInput = contactForm.getElementsByTagName('input'),
+		input = document.getElementsByTagName('input'),
+		contactForm = document.querySelectorAll('.form'),
+		inputForm = document.getElementsByTagName('input'),
 		statusMessage = document.createElement('div');
 
 	statusMessage.classList.add('status');
 
 	// Модальное окно
-
 	let sendForm = (form, input) => {
-		form.addEventListener('submit', (event) => {
-			event.preventDefault();
-			form.appendChild(statusMessage);
-			let formData = new FormData(form);
+		contactForm.forEach(function (form) {
+			form.addEventListener('submit', (event) => {
+				event.preventDefault();
+				form.appendChild(statusMessage);
+				let formData = new FormData(form);
 
-			let postData = (data) => {
+				let postData = (data) => {
 
-				return new Promise(function (resolve, reject) {
-					let request = new XMLHttpRequest();
+					return new Promise(function (resolve, reject) {
+						let request = new XMLHttpRequest();
 
-					request.open('POST', 'server.php');
+						request.open('POST', 'server.php');
 
-					request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+						request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-					let obj = {};
-					formData.forEach((value, key) => {
-						obj[key] = value;
-					});
+						let obj = {};
+						formData.forEach((value, key) => {
+							obj[key] = value;
+						});
 
-					let data = JSON.stringify(obj);
+						let data = JSON.stringify(obj);
 
-					request.onreadystatechange = function () {
-						if (request.readyState < 4) {
-							resolve()
-						} else if (request.readyState === 4 && request.status == 200) {
-							resolve()
-						} else {
-							reject()
+						request.onreadystatechange = function () {
+							if (request.readyState < 4) {
+								resolve()
+							} else if (request.readyState === 4 && request.status == 200) {
+								resolve()
+							} else {
+								reject()
+							}
 						}
+
+						request.send(data);
+					})
+
+				} // Конец postData
+
+				let clearInput = () => {
+					for (let i = 0; i < input.length; i++) {
+						input[i].value = '';
 					}
-
-					request.send(data);
-				})
-
-			} // Конец postData
-
-			let clearInput = () => {
-				for (let i = 0; i < input.length; i++) {
-					input[i].value = '';
 				}
-			}
 
-			postData(formData)
-				.then(() => statusMessage.innerHTML = message.loading)
-				.then(() => {
-					statusMessage.innerHTML = message.success;
-				})
-				.catch(() => statusMessage.innerHTML = message.failure)
-				.then(clearInput)
+				postData(formData)
+					.then(() => statusMessage.innerHTML = message.loading)
+					.then(() => {
+						statusMessage.innerHTML = message.success;
+					})
+					.catch(() => statusMessage.innerHTML = message.failure)
+					.then(clearInput)
+			});
 		});
 	}
 
 	sendForm(form, input);
-	sendForm(contactForm, contactInput);
+	sendForm(contactForm, inputForm);
 }
 module.exports = formModal;
