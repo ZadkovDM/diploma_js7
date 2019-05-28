@@ -5,19 +5,23 @@ function popupModal() {
 
 	for (let i = 0; i < callBack.length; i++) {
 		callBack[i].addEventListener('click', () => {
+			event.preventDefault();
 			popupModal.style.display = 'block';
+			document.body.style.overflow = 'hidden';
 		});
 	}
 
 	for (let i = 0; i < popupClose.length; i++) {
 		popupClose[i].addEventListener('click', () => {
 			popupModal.style.display = 'none';
+			document.body.style.overflow = '';
 		});
 	}
 
 	window.addEventListener('click', (e) => {
 		if (e.target == popupModal) {
 			popupModal.style.display = 'none';
+			document.body.style.overflow = '';
 		}
 	});
 

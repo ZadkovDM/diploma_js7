@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		popupModal = require('./parts/popupModal.js'),
 		formModal = require('./parts/formModal.js'),
 		intervalModal = require('./parts/intervalModal.js'),
+		calcModal = require('./parts/calcModal.js'),
 		viewPhoto = require('./parts/viewPhoto.js');
 
 	timer();
@@ -17,6 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	popupModal();
 	formModal();
 	intervalModal();
+	calcModal();
 	viewPhoto();
 
 });

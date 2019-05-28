@@ -5,17 +5,20 @@ function engineerModal() {
 
 	callEngineer.addEventListener('click', () => {
 		popupEngineer.style.display = 'block';
+		document.body.style.overflow = 'hidden';
 	});
 
 	for (let i = 0; i < popupClose.length; i++) {
 		popupClose[i].addEventListener('click', () => {
 			popupEngineer.style.display = 'none';
+			document.body.style.overflow = '';
 		});
 	}
 
 	window.addEventListener('click', (e) => {
 		if (e.target == popupEngineer) {
 			popupEngineer.style.display = 'none';
+			document.body.style.overflow = '';
 		}
 	});
 
