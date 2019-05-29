@@ -1,84 +1,182 @@
 function calcModal() {
 
-	let calcBtn = document.querySelectorAll('.popup_calc_btn'),
-		calcClose = document.querySelectorAll('.calc_close'),
-		calcBtnOne = document.querySelector('.popup_calc_button'),
-		popup = document.querySelector('.popup_calc'),
-		popupProfile = document.querySelector('.popup_calc_profile'),
-		calcBtnTwo = document.querySelector('.popup_calc_profile_button'),
-		popupEnd = document.querySelector('.popup_calc_end'),
-		// Табы на первом модальном окне
-		info = document.querySelector('.balcon_icons'), //Родитель для табов
-		tabs = info.querySelectorAll('img'), //Табы
-		content = document.querySelectorAll('.big_img > img'); //Контент табов
+	let glazingSection = document.querySelector(".glazing"),
+		popupCalc = document.querySelector(".popup_calc"),
+		closeCalc = document.querySelectorAll('.popup_calc_close'),
+		allModalCalc = document.querySelectorAll('.popup_calc, .popup_calc_profile, .popup_calc_end'),
+		form = document.querySelector('.end_form'),
+		popupCalcInputs = popupCalc.getElementsByTagName("input");
 
-	for (let i = 0; i < tabs.length; i++) {
-		tabs[i].addEventListener('click', () => {
-			for (let u = 0; u < tabs.length; u++) {
-				event.preventDefault();
-				content[u].style.display = 'none';
-				tabs[u].classList.remove('do_image_more');
+	glazingSection.addEventListener("click", (event) => {
+		if (event.target && event.target.classList.contains("popup_calc_btn")) {
+			popupCalc.style.display = "block";
+			document.body.style.overflow = "hidden";
+		}
+	});
+
+	function setValidationCalc(inputs) {
+		for (let i = 0; i < inputs.length; i++) {
+			inputs[i].addEventListener("input", () => {
+				inputs[i].value = inputs[i].value.replace(/[^0-9]/ig, "");
+			});
+		}
+	}
+	setValidationCalc(popupCalcInputs);
+
+	let popupCalcBalconIcons = popupCalc.querySelector(".balcon_icons"), 
+		smallPictures = popupCalc.querySelectorAll(".picture"), 
+		bigPictures = popupCalc.querySelectorAll(".big_img img"); 
+
+	function hidePictures(a) {
+		for (let i = a; i < bigPictures.length; i++) {
+			bigPictures[i].style.display = "none";
+			smallPictures[i].classList.remove("do_image_more");
+		}
+	}
+
+	function showPictures(b) {
+		if (bigPictures[b].style.display = "none") {
+			bigPictures[b].style.display = "inline-block";
+			smallPictures[b].classList.add("do_image_more");
+		}
+	}
+
+	popupCalcBalconIcons.addEventListener("click", (event) => {
+		let target = event.target;
+		event.preventDefault();
+		if (target && target.classList.contains("picture")) {
+			for (let i = 0; i < smallPictures.length; i++) {
+				if (target == smallPictures[i]) {
+					hidePictures(0);
+					showPictures(i);
+					break;
+				}
 			}
-
-			content[i].style.display = 'flex';
-			tabs[i].classList.add('do_image_more');
-		});
-	}
-
-
-	// Первое модальное окно
-	for (let i = 0; i < calcBtn.length; i++) {
-		calcBtn[i].addEventListener('click', () => {
-			popup.style.display = 'block';
-			document.body.style.overflow = 'hidden';
-		});
-	}
-
-	// Закрытие всех модальных окон по клику на крестик
-	for (let i = 0; i < calcClose.length; i++) {
-		calcClose[i].addEventListener('click', () => {
-			popup.style.display = 'none';
-			popupProfile.style.display = 'none';
-			popupEnd.style.display = 'none';
-			document.body.style.overflow = '';
-		});
-	}
-
-	// Закрытие модального окна по клику на подложку
-	window.addEventListener('click', (e) => {
-		if (e.target == popup) {
-			popup.style.display = 'none';
-			document.body.style.overflow = '';
 		}
 	});
 
-	// Второе модальное окно
+	//Modal-Calc-Profile
 
-	calcBtnOne.addEventListener('click', () => {
-		popup.style.display = 'none';
-		popupProfile.style.display = 'block';
+	let popupCalcButton = popupCalc.querySelector(".popup_calc_button"),
+		popupCalcProfile = document.querySelector(".popup_calc_profile"),
+		popupCalcContent = document.querySelector(".popup_calc_content"),
+		popupCalcProfileButton = document.querySelector(".popup_calc_profile_button"),
+		popupCalcEnd = document.querySelector(".popup_calc_end");
+
+
+	popupCalcButton.addEventListener("click", () => {
+
+		let statusMessageInput = document.createElement("div");
+		statusMessageInput.classList.add("status");
+
+		if (popupCalcInputs[0].value == "" && popupCalcInputs[1].value == "") {
+			popupCalc.style.display = "block";
+			popupCalcContent.appendChild(statusMessageInput);
+			statusMessageInput.textContent = "Заполните все поля!";
+		} else {
+			popupCalcProfile.style.display = "block";
+			document.body.style.overflow = "hidden";
+			popupCalc.style.display = "none";
+		}
+
 	});
 
-	window.addEventListener('click', (e) => {
-		if (e.target == popupProfile) {
-			popupProfile.style.display = 'none';
-			document.body.style.overflow = '';
+	document.getElementById('CheckTwo').addEventListener('change', () => {
+		document.getElementById('CheckOne').checked = !document.getElementById('CheckTwo').checked;
+	});
+
+	document.getElementById('CheckOne').addEventListener('change', () => {
+		document.getElementById('CheckTwo').checked = !document.getElementById('CheckOne').checked;
+	});
+
+	popupCalcProfileButton.addEventListener("click", () => {
+		popupCalcProfile.style.display = "none";
+		popupCalcEnd.style.display = "block";
+	});
+
+	function closeModalCalc() {
+		for (let i = 0; i < closeCalc.length; i++) {
+			closeCalc[i].addEventListener('click', function () {
+				for (let c = 0; c < allModalCalc.length; c++) {
+					allModalCalc[c].style.display = 'none';
+					document.body.style.overflow = '';
+				}
+			})
+		}
+
+	}
+	closeModalCalc();
+
+	// Send
+
+	let obj = {},
+		message = {
+			loading: 'Идёт отправка',
+			success: 'Отправлено',
+			failure: 'Ошибка'
+		},
+		statusMessage = document.createElement('div');
+	statusMessage.classList.add('status');
+
+	for (let i = 0; i < smallPictures.length; i++) {
+		smallPictures[i].addEventListener('click', function (e) {
+			let target = e.target;
+			if (target == smallPictures[i]) {
+				obj.type = smallPictures[i].getAttribute('alt');
+			}
+		})
+	}
+
+	popupCalcButton.addEventListener('click', function () {
+		obj.width_window = document.getElementById('width').value;
+		obj.height_window = document.getElementById('height').value;
+	});
+
+	document.querySelector('.popup_calc_profile_button').addEventListener('click', function () {
+		if (document.getElementById('CheckOne').checked) {
+			obj.weather = 'Холодное';
+		} else {
+			obj.weather = 'Тёплое';
 		}
 	});
 
-	// Третье модальное окно
+	function sendFormCalc() {
 
-	calcBtnTwo.addEventListener('click', () => {
-		popupProfile.style.display = 'none';
-		popupEnd.style.display = 'block';
-	});
+		form.addEventListener('submit', function (event) {
+			event.preventDefault();
+			form.appendChild(statusMessage);
+			input = form.querySelectorAll('.form-control');
 
-	window.addEventListener('click', (e) => {
-		if (e.target == popupEnd) {
-			popupEnd.style.display = 'none';
-			document.body.style.overflow = '';
-		}
-	});
+			let request = new XMLHttpRequest();
+			request.open('POST', 'server.php');
+			request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+			let formData = new FormData(form);
+
+			formData.forEach(function (value, key) {
+				obj[key] = value;
+			});
+
+
+			let json = JSON.stringify(obj);
+
+			request.send(json);
+
+			request.addEventListener('readystatechange', function () {
+				if (request.readyState < 4) {
+					statusMessage.innerHTML = message.loading;
+				} else if (request.readyState === 4 && request.status == 200) {
+					statusMessage.innerHTML = message.success;
+				} else {
+					statusMessage.innerHTML = message.failure;
+				}
+			});
+			for (let i = 0; i < input.length; i++) {
+				input[i].value = '';
+			}
+		});
+	}
+	sendFormCalc();
 
 }
 module.exports = calcModal;

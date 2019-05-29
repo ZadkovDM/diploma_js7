@@ -16,7 +16,7 @@ function formModal() {
 
 	let form = document.querySelector('.main_form'),
 		input = document.getElementsByTagName('input'),
-		contactForm = document.querySelectorAll('.form'),
+		contactForm = document.querySelectorAll('.second_form'),
 		inputForm = document.getElementsByTagName('input'),
 		statusMessage = document.createElement('div');
 

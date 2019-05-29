@@ -1,5 +1,20 @@
 function viewPhoto() {
 
+	// const row = document.querySelector('.works .row');
+
+	// row.addEventListener('click', (event) => {
+		
+	// 	let target = event.target;
+		
+	// 	if (target.classList.contains('wow') || target.closest('.wow')){
+	// 		let one = target.closest('.wow').querySelector('a');
+	// 		target.preventDefault();
+	// 		// target.querySelector('img').preventDefault();
+	// 		console.log(one);
+	// 	}
+	// });
+
+
 	let photoSmall = document.querySelectorAll('.photo'),
 		overlay = document.querySelector('.overlay');
 
