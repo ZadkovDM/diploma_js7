@@ -368,9 +368,7 @@ function formModal() {
 		failure: 'Ошибка'
 	};
 
-	let form = document.querySelector('.main_form'),
-		input = document.getElementsByTagName('input'),
-		contactForm = document.querySelectorAll('.second_form'),
+	let contactForm = document.querySelectorAll('.second_form, .main_form'),
 		inputForm = document.getElementsByTagName('input'),
 		statusMessage = document.createElement('div');
 
@@ -432,7 +430,6 @@ function formModal() {
 		});
 	}
 
-	sendForm(form, input);
 	sendForm(contactForm, inputForm);
 }
 module.exports = formModal;
